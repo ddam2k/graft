@@ -13,6 +13,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ddam2k/graft/internal/utils"
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/crane"
 	"github.com/google/go-containerregistry/pkg/name"
@@ -21,7 +22,6 @@ import (
 	"github.com/google/go-containerregistry/pkg/v1/mutate"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
 	"github.com/google/go-containerregistry/pkg/v1/tarball"
-	"mgkim.hpy.kr/graft/internal/utils"
 )
 
 type BuilderConfig struct {

@@ -3,8 +3,8 @@ package cmd
 import (
 	"runtime"
 
+	"github.com/ddam2k/graft/internal/diff_pull"
 	"github.com/spf13/cobra"
-	"mgkim.hpy.kr/graft/internal/diff_pull"
 )
 
 func NewCmdDiffPull() *cobra.Command {

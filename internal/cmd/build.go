@@ -3,8 +3,8 @@ package cmd
 import (
 	"runtime"
 
+	"github.com/ddam2k/graft/internal/build"
 	"github.com/spf13/cobra"
-	"mgkim.hpy.kr/graft/internal/build"
 )
 
 // graft build -f ./Dockerfile -t myeongkr/build-test:latest

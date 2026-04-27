@@ -3,8 +3,8 @@ package cmd
 import (
 	"runtime"
 
+	"github.com/ddam2k/graft/internal/pull"
 	"github.com/spf13/cobra"
-	"mgkim.hpy.kr/graft/internal/pull"
 )
 
 func NewCmdPull() *cobra.Command {

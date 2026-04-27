@@ -5,8 +5,8 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/ddam2k/graft/internal/cmd"
 	"github.com/spf13/cobra"
-	"mgkim.hpy.kr/graft/internal/cmd"
 )
 
 func main() {

@@ -3,8 +3,8 @@ package cmd
 import (
 	"runtime"
 
+	"github.com/ddam2k/graft/internal/push"
 	"github.com/spf13/cobra"
-	"mgkim.hpy.kr/graft/internal/push"
 )
 
 func NewCmdPush() *cobra.Command {

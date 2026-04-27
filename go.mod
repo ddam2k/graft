@@ -1,4 +1,4 @@
-module mgkim.hpy.kr/graft
+module github.com/ddam2k/graft
 
 go 1.26.1
 
