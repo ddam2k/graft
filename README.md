@@ -54,11 +54,58 @@ In secure environments where installing WSL2 or Docker Desktop is restricted, yo
 ### 2. Efficient Updates for Large Images
 When an update is required for a server already in operation, use `diff-pull` to quickly transfer only the changed layers instead of re-transferring an entire image several gigabytes in size.
 
+### 3. Lightweight CI/CD Integration
+In CI environments such as GitLab Runner, Jenkins, and Tekton, you can build simple Dockerfiles and push to repositories without a Docker daemon or root privileges. While limited in functionality compared to full Docker, it provides a lightweight alternative for basic container build workflows.
+
+---
+
+---
+
+## Installation
+
+### Prerequisites
+
+- **Go 1.26.1** or higher
+
+### Install from Source
+
+#### Using `go install` (Recommended)
+
+```bash
+go install github.com/ddam2k/graft@latest
+```
+
+The `graft` binary will be installed to your `$GOPATH/bin` directory (usually `~/go/bin``). Make sure this directory is in your `PATH`:
+
+```bash
+export PATH=$PATH:$(go env GOPATH)/bin
+```
+
+#### Build from Source
+
+```bash
+# Clone the repository
+git clone https://github.com/ddam2k/graft.git
+cd graft
+
+# Build the binary
+go build -o graft .
+
+# (Optional) Install to your PATH
+mv graft /usr/local/bin/
+```
+
+### Verify Installation
+
+```bash
+graft --version
+```
+
 ---
 
 ## Requirements
 
-- **Go 1.26.1** or higher
+- **Go 1.26.1** or higher (for building from source)
 - **No Docker Daemon Required:** Runs standalone without Docker Engine or virtualization layers.
 
 ## Dependencies

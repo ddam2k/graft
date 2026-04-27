@@ -54,11 +54,56 @@ WSL2나 Docker Desktop 설치가 제한적인 보안 환경에서 Go나 Rust 등
 ### 2. 대용량 이미지의 효율적 업데이트
 이미 운영 중인 서버에 업데이트가 필요할 때, 수 GB에 달하는 전체 이미지를 다시 옮길 필요 없이 `diff-pull`로 변경된 레이어만 빠르게 전송합니다.
 
+### 3. 경량 CI/CD 통합
+GitLab Runner, Jenkins, Tekton 등의 CI 환경에서 데몬리스(Daemon-less)로 실행 가능하여 별도의 Root 권한 없이도 간단한 Dockerfile을 빌드하고 저장소에 푸시할 수 있습니다. 전체 도커 기능 대비 경량화된 대안으로, 기본적인 컨테이너 빌드 워크플로우에 적합합니다.
+
+---
+
+## 설치 방법 (Installation)
+
+### 전제 조건 (Prerequisites)
+
+- **Go 1.26.1** 이상
+
+### 소스에서 설치 (Install from Source)
+
+#### `go install` 사용 (권장)
+
+```bash
+go install github.com/ddam2k/graft@latest
+```
+
+`graft` 바이너리가 `$GOPATH/bin` 디렉토리 (일반적으로 `~/go/bin`)에 설치됩니다. 이 디렉토리가 `PATH`에 포함되어 있는지 확인하세요:
+
+```bash
+export PATH=$PATH:$(go env GOPATH)/bin
+```
+
+#### 소스에서 빌드 (Build from Source)
+
+```bash
+# 저장소 복제
+git clone https://github.com/ddam2k/graft.git
+cd graft
+
+# 바이너리 빌드
+go build -o graft .
+
+# (선택사항) PATH에 설치
+mv graft /usr/local/bin/
+```
+
+### 설치 확인 (Verify Installation)
+
+```bash
+graft --version
+```
+
 ---
 
 ## 요구 사항 (Requirements)
 
-- **Go 1.26.1** 이상
+- **Go 1.26.1** 이상 (소스에서 빌드할 경우)
 - **No Docker Daemon Required:** 도커 엔진이나 가상화 레이어 없이 단독 실행 가능
 
 ## 의존성 (Dependencies)
