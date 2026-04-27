@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26'
+
+      - name: Build Binary (Windows, Linux, macOS)
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o graft-linux-amd64 .
+          GOOS=windows GOARCH=amd64 go build -o graft-windows-amd64.exe .
+          GOOS=darwin GOARCH=arm64 go build -o graft-darwin-arm64 .
+
+      - name: Release Image
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            graft-linux-amd64
+            graft-windows-amd64.exe
+            graft-darwin-arm64
+          body: |
+            ## Graft Release
+            - Lightweight, Daemon-less Docker tool
+            - Optimized for air-gapped environments
+            - Supported: Linux, Windows, macOS
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
