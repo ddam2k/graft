@@ -14,6 +14,7 @@ func NewCmdDiffPush() *cobra.Command {
 	password := ""
 	platform := ""
 	bInsecure := false
+	bPush := false
 
 	cmd := &cobra.Command{
 		Use:   "diff-push [file] [image]",
@@ -41,6 +42,7 @@ func NewCmdDiffPush() *cobra.Command {
 	cmd.Flags().StringVarP(&password, "password", "p", "", "password for registry")
 	cmd.Flags().StringVar(&platform, "platform", "linux/"+runtime.GOARCH, "platform for build")
 	cmd.Flags().BoolVar(&bInsecure, "insecure", false, "insecure registry")
+	cmd.Flags().BoolVar(&bPush, "push", false, "push image to registry")
 
 	return cmd
 }

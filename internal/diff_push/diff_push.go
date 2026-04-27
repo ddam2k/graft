@@ -22,6 +22,7 @@ import (
 
 type DiffPushConfig struct {
 	ImageUrl string
+	Push     bool
 	Username string
 	Password string
 	FilePath string
@@ -218,15 +219,39 @@ func DiffPush(config DiffPushConfig) error {
 
 	tag := repo.Tag(targetTagName)
 
-	tagToImage := map[name.Tag]v1.Image{
-		tag: image,
-	}
-
 	repository, tagName := utils.ParseRepositoryUrl(config.ImageUrl)
 	path := strings.ReplaceAll(repository, "/", "-") + "." + tagName + "." + imageOs + "." + imageArch + ".tar"
 
-	if err := tarball.MultiWriteToFile(path, tagToImage); err != nil {
-		return err
+	if config.Push {
+
+		customTransport := &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: config.Insecure,
+			},
+		}
+
+		if config.Username != "" && config.Password != "" {
+			if err := remote.Write(tag, image, remote.WithAuth(&authn.Basic{
+				Username: config.Username,
+				Password: config.Password,
+			}), remote.WithTransport(customTransport)); err != nil {
+				log.Println(err)
+				return err
+			}
+		} else {
+			if err := remote.Write(tag, image, remote.WithTransport(customTransport)); err != nil {
+				log.Println(err)
+				return err
+			}
+		}
+	} else {
+		tagToImage := map[name.Tag]v1.Image{
+			tag: image,
+		}
+
+		if err := tarball.MultiWriteToFile(path, tagToImage); err != nil {
+			return err
+		}
 	}
 
 	return nil
